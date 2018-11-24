@@ -5,20 +5,24 @@
 # is restricted to this project.
 use Mix.Config
 
-# Customize the firmware. Uncomment all or parts of the following
-# to add files to the root filesystem or modify the firmware
-# archive.
+# Customize non-Elixir parts of the firmware. See
+# https://hexdocs.pm/nerves/advanced-configuration.html for details.
 
-# config :nerves, :firmware,
-#   rootfs_overlay: "rootfs_overlay",
-#   fwup_conf: "config/fwup.conf"
+config :nerves, :firmware, rootfs_overlay: "rootfs_overlay"
 
 # Use shoehorn to start the main application. See the shoehorn
 # docs for separating out critical OTP applications such as those
 # involved with firmware updates.
+
 config :shoehorn,
   init: [:nerves_runtime],
   app: Mix.Project.config()[:app]
+
+# Use Ringlogger as the logger backend and remove :console.
+# See https://hexdocs.pm/ring_logger/readme.html for more information on
+# configuring ring_logger.
+
+config :logger, backends: [RingLogger]
 
 # Import target specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

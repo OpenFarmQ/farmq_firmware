@@ -1,19 +1,31 @@
 defmodule FarmQ.Firmware.Application do
+  # See https://hexdocs.pm/elixir/Application.html
+  # for more information on OTP Applications
+  @moduledoc false
+
+  @target Mix.Project.config()[:target]
+
   use Application
 
-  # See http://elixir-lang.org/docs/stable/elixir/Application.html
-  # for more information on OTP Applications
   def start(_type, _args) do
-    import Supervisor.Spec, warn: false
-
-    # Define workers and child supervisors to be supervised
-    children = [
-      # worker(FarmQ.Firmware.Worker, [arg1, arg2, arg3]),
-    ]
-
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
+    # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: FarmQ.Firmware.Supervisor]
-    Supervisor.start_link(children, opts)
+    Supervisor.start_link(children(@target), opts)
+  end
+
+  # List all child processes to be supervised
+  def children("host") do
+    [
+      # Starts a worker by calling: FarmQ.Firmware.Worker.start_link(arg)
+      # {FarmQ.Firmware.Worker, arg},
+    ]
+  end
+
+  def children(_target) do
+    [
+      # Starts a worker by calling: FarmQ.Firmware.Worker.start_link(arg)
+      # {FarmQ.Firmware.Worker, arg},
+    ]
   end
 end
