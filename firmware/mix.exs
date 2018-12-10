@@ -41,7 +41,9 @@ defmodule FarmQ.Firmware.MixProject do
       {:nerves, "~> 1.3", runtime: false},
       {:shoehorn, "~> 0.4"},
       {:ring_logger, "~> 0.6"},
-      {:toolshed, "~> 0.2"}
+      {:toolshed, "~> 0.2"},
+      {:farmq_os, path: "../os"},
+      {:phoenix_live_reload, "~> 1.2-rc", only: :dev}
     ] ++ deps(@target)
   end
 

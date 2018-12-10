@@ -29,3 +29,4 @@ config :logger, backends: [RingLogger]
 # Uncomment to use target specific configurations
 
 # import_config "#{Mix.Project.config[:target]}.exs"
+import_config "../../os/config/config.exs"
